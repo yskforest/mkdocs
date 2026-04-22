@@ -1,0 +1,66 @@
+site_name: 開発ドキュメント  # サイトのタイトル
+site_url: ""               # 本番公開時にURLを設定
+site_author: "開発チーム"
+
+theme:
+  name: material
+  language: ja             # UIを日本語化
+  
+  # 1. カラーテーマとダークモード切替
+  palette:
+    # ライトモードのデフォルト設定
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: indigo      # ヘッダーのメインカラー
+      accent: deep purple  # リンクなどのアクセントカラー
+      toggle:
+        icon: material/weather-night
+        name: ダークモードに切り替え
+    # ダークモードの設定
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: deep purple
+      toggle:
+        icon: material/weather-sunny
+        name: ライトモードに切り替え
+
+  # 2. ナビゲーション（メニュー）の最適化
+  features:
+    - navigation.tabs        # 画面上部にグローバルナビゲーションを配置
+    - navigation.sections    # サイドバーの親メニューを太字のセクションにする
+    # - navigation.expand      # サイドバーの階層を最初からすべて開いておく
+    - navigation.indexes
+    - navigation.top         # 画面右下に「トップへ戻る」ボタンを表示
+    - search.suggest         # 検索時のサジェスト機能を有効化
+    - search.highlight       # 検索結果のキーワードをハイライト
+    - content.code.copy      # コードブロックに「コピー」ボタンを追加
+
+# 3. 日本語検索の最適化
+plugins:
+  - search:
+      lang: ja
+      separator: '[\s\-\.]+'
+
+# 4. Markdown拡張機能（開発者向け必須設定）
+markdown_extensions:
+  - admonition               # 警告やノート（!!! note 等）のブロックを表示
+  - pymdownx.details         # 折りたたみ可能なブロック（??? note 等）
+  - pymdownx.tabbed:         # コードブロックのタブ切り替え
+      alternate_style: true
+  - pymdownx.highlight:      # コードのシンタックスハイライト
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite    # インラインコードのハイライト
+  - tables                   # Markdownのテーブルを利用可能にする
+  - plantuml_markdown:
+      server: http://kroki:8000/plantuml
+
+  # 2. Mermaidの設定 (```mermaid をブラウザ側で描画)
+  # plantumlの処理は上記に任せているため、ここではmermaidのみを指定します
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format

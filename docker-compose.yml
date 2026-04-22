@@ -1,0 +1,24 @@
+services:
+  mkdocs:
+    build: .
+    # image: squidfunk/mkdocs-material:latest
+    container_name: mkdocs_dev
+    ports:
+      - "8100:8000"
+    volumes:
+      # カレントディレクトリをコンテナ内の /docs にマウント
+      - ./:/docs
+    # 開発用サーバーを起動（外部からのアクセスを許可）
+    command: serve --dev-addr=0.0.0.0:8000
+    depends_on:
+      - kroki
+
+  kroki:
+    image: yuzutech/kroki:latest
+    container_name: kroki_server
+    # 外部公開不要（MkDocsコンテナ内からのみ通信）
+    expose:
+      - "8000"
+    environment:
+      - KROKI_PLANTUML_ENABLED=true
+
