@@ -37,6 +37,8 @@ docker compose up --build build
 docker compose up --build serve
 ```
 
+- test
+
 ブラウザで `http://localhost` にアクセスしてください。
 
 ### 💡 ファイル構成 (File Structure)
