@@ -23,6 +23,12 @@ docker compose down
 
 # 公開
 docker compose up -d nginx
+
+# 自己署名証明書作成
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout server.key \
+  -out server.crt \
+  -subj "/C=JP/ST=Tokyo/L=Local/O=Dev/OU=IT/CN=localhost"
 ```
 
 ## 🏗️ システム構成 (Architecture & Components)
