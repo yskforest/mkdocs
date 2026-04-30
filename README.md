@@ -10,16 +10,19 @@
 
 ## 🚀 Quick Reference
 ```bash
+# PW作成
 sudo apt update
 sudo apt install apache2-utils
-
 htpasswd -c htpasswd {ユーザー名}
 
+# ビルド
 docker compose build
-
 docker compose up -d
+docker compose exec mkdocs mkdocs build
+docker compose down
 
-docker compose up --build serve
+# 公開
+docker compose up -d nginx
 ```
 
 ## 🏗️ システム構成 (Architecture & Components)
