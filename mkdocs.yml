@@ -1,6 +1,9 @@
-site_name: 開発ドキュメント  # サイトのタイトル
-site_url: ""               # 本番公開時にURLを設定
+site_name: 開発ドキュメント
+site_url: ""
 site_author: "開発チーム"
+
+repo_name: "yskforest/mkdocs"
+repo_url: "https://github.com/yskforest/mkdocs"
 
 theme:
   name: material
@@ -35,12 +38,22 @@ theme:
     - search.suggest         # 検索時のサジェスト機能を有効化
     - search.highlight       # 検索結果のキーワードをハイライト
     - content.code.copy      # コードブロックに「コピー」ボタンを追加
+    - navigation.footer        # ページ下部に「前へ / 次へ」のナビゲーションを表示
+    - toc.integrate            # 右側の目次(TOC)を左側のサイドバーに統合（画面を広く使える）
+    - content.tabs.link        # タブを切り替えた際、他のページの同じ名前のタブも連動して切り替わる
 
 # 3. 日本語検索の最適化
 plugins:
   - search:
       lang: ja
       separator: '[\s\-\.]+'
+  # タブ機能（標準搭載）: ページにタグ付けをして、一覧ページを自動生成
+  - tags
+  # 最終更新日の自動表示（要: コンテナ内での git のインストール）
+  # pip install mkdocs-git-revision-date-localized-plugin 等が必要
+  - git-revision-date-localized:
+      type: date      # 「3日前」のような表示にするか、日付(date)にするか選べます
+      enable_creation_date: true
 
 # 4. Markdown拡張機能（開発者向け必須設定）
 markdown_extensions:
@@ -56,6 +69,7 @@ markdown_extensions:
   - tables                   # Markdownのテーブルを利用可能にする
   - plantuml_markdown:
       server: http://kroki:8000/plantuml
+      format: svg
 
   # 2. Mermaidの設定 (```mermaid をブラウザ側で描画)
   # plantumlの処理は上記に任せているため、ここではmermaidのみを指定します
@@ -64,3 +78,41 @@ markdown_extensions:
         - name: mermaid
           class: mermaid
           format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tasklist:         # [ ] や [x] でチェックボックス（タスクリスト）を表示
+      custom_checkbox: true
+  - pymdownx.magiclink         # URLやGitHubのIssue番号（#123など）を自動的にリンク化
+  - pymdownx.mark              # ==ハイライトしたい文字== で黄色のマーカー線を引ける
+  - attr_list                  # {: .class } のような記法でMarkdown要素に直接CSSクラスを付与
+  - md_in_html                 # HTMLタグの中にMarkdownを書いても解釈されるようにする
+
+  # Python Markdown
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - toc:
+      permalink: true
+
+  # Python Markdown Extensions
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
