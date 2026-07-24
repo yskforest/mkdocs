@@ -13,12 +13,12 @@
 # PW作成
 sudo apt update
 sudo apt install apache2-utils
-htpasswd -c htpasswd {ユーザー名}
+htpasswd -c server/htpasswd {ユーザー名}
 
 # ビルド
 docker compose build
 docker compose up -d
-docker compose exec mkdocs mkdocs build
+docker compose exec mkdocs mkdocs build --clean
 docker compose down
 
 # 公開
@@ -26,8 +26,8 @@ docker compose up -d nginx
 
 # 自己署名証明書作成
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
-  -keyout server.key \
-  -out server.crt \
+  -keyout server/server.key \
+  -out server/server.crt \
   -subj "/C=JP/ST=Tokyo/L=Local/O=Dev/OU=IT/CN=localhost"
 ```
 
