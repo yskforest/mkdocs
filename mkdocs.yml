@@ -30,17 +30,24 @@ theme:
 
   # 2. ナビゲーション（メニュー）の最適化
   features:
-    - navigation.tabs        # 画面上部にグローバルナビゲーションを配置
-    - navigation.sections    # サイドバーの親メニューを太字のセクションにする
-    # - navigation.expand      # サイドバーの階層を最初からすべて開いておく
+    - navigation.instant          # SPA風の高速ページ遷移
+    - navigation.instant.progress # 遷移時のプログレスバー表示
+    - navigation.sections         # サイドバーの親メニューを太字のセクションにする
+    # - navigation.expand         # サイドバーの階層を最初からすべて開いておく
     - navigation.indexes
-    - navigation.top         # 画面右下に「トップへ戻る」ボタンを表示
-    - search.suggest         # 検索時のサジェスト機能を有効化
-    - search.highlight       # 検索結果のキーワードをハイライト
-    - content.code.copy      # コードブロックに「コピー」ボタンを追加
-    - navigation.footer        # ページ下部に「前へ / 次へ」のナビゲーションを表示
-    - toc.integrate            # 右側の目次(TOC)を左側のサイドバーに統合（画面を広く使える）
-    - content.tabs.link        # タブを切り替えた際、他のページの同じ名前のタブも連動して切り替わる
+    - navigation.path             # ページ上部にパンくずリストを表示
+    - navigation.top              # 画面右下に「トップへ戻る」ボタンを表示
+    - search.suggest              # 検索時のサジェスト機能を有効化
+    - search.highlight            # 検索結果のキーワードをハイライト
+    - search.share                # 検索結果の共有リンクボタンを表示
+    - content.code.copy           # コードブロックに「コピー」ボタンを追加
+    - content.code.annotate       # コードブロック内の注釈機能を有効化
+    - navigation.footer           # ページ下部に「前へ / 次へ」のナビゲーションを表示
+    - toc.integrate               # 右側の目次(TOC)を左側のサイドバーに統合（画面を広く使える）
+    - content.tabs.link           # タブを切り替えた際、他のページの同じ名前のタブも連動して切り替わる
+
+extra_css:
+  - stylesheets/extra.css
 
 # 3. 日本語検索の最適化
 plugins:
@@ -54,6 +61,19 @@ plugins:
   - git-revision-date-localized:
       type: date      # 「3日前」のような表示にするか、日付(date)にするか選べます
       enable_creation_date: true
+  # PDF出力（各ページ単位でPDFを生成・ダウンロードボタンを表示）
+  - exporter:
+      formats:
+        pdf:
+          enabled: !ENV [MKDOCS_EXPORTER_PDF, true]
+          serve: !ENV [MKDOCS_EXPORTER_PDF_SERVE, false]
+          stylesheets:
+            - docs/stylesheets/pdf.css
+      buttons:
+        - title: PDFとしてダウンロード
+          icon: material-file-download-outline
+          enabled: !!python/name:mkdocs_exporter.formats.pdf.buttons.download.enabled
+          attributes: !!python/name:mkdocs_exporter.formats.pdf.buttons.download.attributes
 
 # 4. Markdown拡張機能（開発者向け必須設定）
 markdown_extensions:
